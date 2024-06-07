@@ -2,6 +2,8 @@
 
 > Calculates days from 01/01/1970 in London
 
+![screenshot](./assets/screenshot.png)
+
 ## The problem
 
 When you working with dates, It require to use UTC time format. For example `2024-06-07T14:31:22Z`. It's ok if you are using SQL, but awful if you are working from vanilla javascript.
