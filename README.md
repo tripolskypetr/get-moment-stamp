@@ -1,6 +1,6 @@
 # get-moment-stamp
 
-> Calculates days from 01/01/1970 in London
+> Calculates days since 01/01/1970 in London
 
 ![screenshot](https://github.com/tripolskypetr/get-moment-stamp/blob/master/assets/screenshot.png?raw=true)
 
