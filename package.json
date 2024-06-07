@@ -1,0 +1,42 @@
+{
+  "name": "get-moment-stamp",
+  "version": "1.0.0",
+  "readme": "README.md",
+  "description": "The getMomentStamp() function returns number of days since 01/01/1970 independent from the current time zone",
+  "private": false,
+  "author": {
+    "name": "Petr Tripolsky",
+    "email": "tripolskypetr@gmail.com",
+    "url": "https://github.com/tripolskypetr"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/react-declarative",
+  "keywords": [
+    "date-fns",
+    "lightweight",
+    "utc",
+    "timestamp",
+    "unixtime",
+    "dayjs",
+    "date",
+    "time",
+    "immutable",
+    "moment"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-declarative/react-declarative",
+    "documentation": "https://github.com/react-declarative/react-declarative/tree/master/docs"
+  },
+  "bugs": {
+    "url": "https://github.com/react-declarative/react-declarative/issues"
+  },
+  "type": "module",
+  "types": "index.d.ts",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/react-declarative/react-declarative#license"
+    }
+  ]
+}
