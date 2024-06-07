@@ -1,6 +1,6 @@
 {
   "name": "get-moment-stamp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "readme": "README.md",
   "description": "The getMomentStamp() function returns number of days since 01/01/1970 independent from the current time zone",
   "private": false,
