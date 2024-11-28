@@ -1,6 +1,11 @@
 
-export const toLondonDate = (date) => {
+export const toLondonDate_obsolete = (date) => {
     return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+};
+
+export const toLondonDate = (date) => {
+    const londonTimeZone = 'Europe/London';
+    return new Date(date.toLocaleString('en-US', { timeZone: londonTimeZone }));
 };
 
 const GENESIS_STAMP = toLondonDate(new Date(0));
@@ -28,3 +33,17 @@ export const isCurrentTime = (timeStamp, delta = 15) => {
 export const isCurrentDate = (date, stamp = getMomentStamp()) => {
     return getMomentStamp(date) === stamp;
 }
+
+export const fromMomentStamp = (momentStamp) => {
+    const millisecondsSinceGenesis = momentStamp * DIMENSION_DELTA;
+    const londonDate = new Date(GENESIS_STAMP.getTime() + millisecondsSinceGenesis);
+    return new Date(londonDate.getTime() - londonDate.getTimezoneOffset() * 60000);
+};
+
+export const fromTimeStamp = (timeStamp, baseDate = new Date()) => {
+    const hours = Math.floor(timeStamp / 60);
+    const minutes = timeStamp % 60;
+    const resultDate = new Date(baseDate);
+    resultDate.setHours(hours, minutes, 0, 0); // Set hours, minutes, seconds, and milliseconds
+    return resultDate;
+};
