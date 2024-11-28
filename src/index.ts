@@ -1,8 +1,8 @@
-export const toLondonDate_obsolete = (date: Date): Date => {
+/*export const toLondonDate_obsolete = (date = new Date()): Date => {
     return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-};
+};*/
 
-export const toLondonDate = (date: Date): Date => {
+export const toLondonDate = (date = new Date()): Date => {
     const londonTimeZone = 'Europe/London';
     return new Date(date.toLocaleString('en-US', { timeZone: londonTimeZone }));
 };
