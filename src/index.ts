@@ -46,3 +46,11 @@ export const fromTimeStamp = (timeStamp: number, baseDate: Date = new Date()): D
     resultDate.setHours(hours, minutes, 0, 0);
     return resultDate;
 };
+
+export const fromTimeStampWithMoment = (timeStamp: number, momentStamp = getMomentStamp()): Date => {
+    const baseDate: Date = fromMomentStamp(momentStamp);
+    const hours: number = Math.floor(timeStamp / 60);
+    const minutes: number = timeStamp % 60;
+    baseDate.setHours(hours, minutes, 0, 0);
+    return baseDate;
+};
