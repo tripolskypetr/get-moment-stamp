@@ -1,6 +1,6 @@
 {
   "name": "get-moment-stamp",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "readme": "README.md",
   "description": "The getMomentStamp() function returns number of days since 01/01/1970 independent from the current time zone",
   "private": false,
@@ -51,6 +51,11 @@
       "type": "MIT",
       "url": "https://github.com/react-declarative/react-declarative#license"
     }
+  ],
+  "files": [
+    "build",
+    "types.d.ts",
+    "README.md"
   ],
   "devDependencies": {
     "@types/jest": "29.1.2",
