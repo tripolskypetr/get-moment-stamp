@@ -1,24 +1,12 @@
-/*export const toLondonDate_obsolete = (date = new Date()): Date => {
-    return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-};*/
-
-export const toLondonDate = (date = new Date()): Date => {
-    const londonTimeZone = 'Europe/London';
-    return new Date(date.toLocaleString('en-US', { timeZone: londonTimeZone }));
-};
-
-const GENESIS_STAMP: Date = toLondonDate(new Date(0));
 const DIMENSION_DELTA: number = 1000 * 60 * 60 * 24;
 
 export const getMomentStamp = (date: Date = new Date()): number => {
-    const currentStamp: Date = toLondonDate(date);
-    const differenceMs: number = Math.abs(currentStamp.getTime() - GENESIS_STAMP.getTime());
-    return Math.floor(differenceMs / DIMENSION_DELTA);
+    return Math.floor(date.getTime() / DIMENSION_DELTA);
 };
 
 export const getTimeStamp = (date: Date = new Date()): number => {
-    const hour: number = date.getHours();
-    const minute: number = date.getMinutes();
+    const hour: number = date.getUTCHours();
+    const minute: number = date.getUTCMinutes();
     return hour * 60 + minute;
 };
 
@@ -34,16 +22,14 @@ export const isCurrentDate = (date: Date, stamp: number = getMomentStamp()): boo
 };
 
 export const fromMomentStamp = (momentStamp: number): Date => {
-    const millisecondsSinceGenesis: number = momentStamp * DIMENSION_DELTA;
-    const londonDate: Date = new Date(GENESIS_STAMP.getTime() + millisecondsSinceGenesis);
-    return new Date(londonDate.getTime() - londonDate.getTimezoneOffset() * 60000);
+    return new Date(momentStamp * DIMENSION_DELTA);
 };
 
 export const fromTimeStamp = (timeStamp: number, baseDate: Date = new Date()): Date => {
     const hours: number = Math.floor(timeStamp / 60);
     const minutes: number = timeStamp % 60;
     const resultDate: Date = new Date(baseDate);
-    resultDate.setHours(hours, minutes, 0, 0);
+    resultDate.setUTCHours(hours, minutes, 0, 0);
     return resultDate;
 };
 
@@ -51,6 +37,6 @@ export const fromTimeStampWithMoment = (timeStamp: number, momentStamp = getMome
     const baseDate: Date = fromMomentStamp(momentStamp);
     const hours: number = Math.floor(timeStamp / 60);
     const minutes: number = timeStamp % 60;
-    baseDate.setHours(hours, minutes, 0, 0);
+    baseDate.setUTCHours(hours, minutes, 0, 0);
     return baseDate;
 };

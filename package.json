@@ -1,8 +1,8 @@
 {
   "name": "get-moment-stamp",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "readme": "README.md",
-  "description": "The getMomentStamp() function returns number of days since 01/01/1970 independent from the current time zone",
+  "description": "Pure-UTC time math: install it and forget about time zones, DST and host locale. Encodes any instant as two flat integers — whole UTC days since 1970-01-01 and minutes since 00:00 UTC — so cache keys and schedulers stay stable across Docker rebuilds and tzdata updates.",
   "private": false,
   "scripts": {
     "build": "rollup -c",
@@ -16,17 +16,27 @@
   "license": "MIT",
   "homepage": "https://github.com/react-declarative",
   "keywords": [
-    "date-fns",
-    "lightweight",
-    "zero-dependency",
     "utc",
+    "utc-only",
+    "timezone-independent",
+    "tz-safe",
+    "no-dst",
+    "no-bst",
+    "scheduler",
+    "cron",
+    "cache-key",
+    "docker-safe",
+    "deterministic",
     "timestamp",
     "unixtime",
-    "dayjs",
     "date",
     "time",
+    "moment",
+    "dayjs",
+    "date-fns",
     "immutable",
-    "moment"
+    "lightweight",
+    "zero-dependency"
   ],
   "repository": {
     "type": "git",

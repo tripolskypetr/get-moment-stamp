@@ -1,39 +1,37 @@
-import { getMomentStamp, toLondonDate } from "../index";
-
-const NOW = new Date();
+import { getMomentStamp } from "../index";
 
 const STEP = 1_000; // 1 second
+const DAY_MS = 1000 * 60 * 60 * 24;
 
-const START_FROM_LONDON = toLondonDate().getTime() - new Date().getTime();
+// Pick a fixed UTC day so the test is deterministic and independent of the host TZ.
+const START_OF_DAY_UTC = Date.UTC(2026, 4, 27, 0, 0, 0, 0); // 2026-05-27T00:00:00.000Z
+const END_OF_DAY_UTC = Date.UTC(2026, 4, 27, 23, 59, 59, 0); // 2026-05-27T23:59:59.000Z
 
-const START_OF_DAY = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate(), 0, 1, 0, 0).getTime() - START_FROM_LONDON;
-const END_OF_DAY = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate(), 23, 59, 0, 0).getTime();
-
-describe('Check getMomentStamp London dimension', () => {
+describe("Check getMomentStamp UTC dimension", () => {
 
     let DATE_STAMP: number;
     let EXPECT_MOMENT_STAMP: number;
 
     beforeAll(() => {
-        DATE_STAMP = START_OF_DAY;
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(START_OF_DAY_UTC));
+        DATE_STAMP = START_OF_DAY_UTC;
         EXPECT_MOMENT_STAMP = getMomentStamp();
-        jest.useFakeTimers()
-        jest.setSystemTime(toLondonDate(new Date(DATE_STAMP)))
     });
 
     beforeEach(() => {
         DATE_STAMP += STEP;
-        jest.setSystemTime(DATE_STAMP)
+        jest.setSystemTime(new Date(DATE_STAMP));
     });
 
     afterAll(() => {
-        jest.useRealTimers()
+        jest.useRealTimers();
     });
 
-    test(`Expect moment stamp to be London`, () => {
+    test("Expect moment stamp to be stable through a full UTC day", () => {
         let iter = 0;
         let isOk = true;
-        for (let i = START_OF_DAY; i <= END_OF_DAY; i += STEP) {
+        for (let i = START_OF_DAY_UTC; i <= END_OF_DAY_UTC; i += STEP) {
             const currentStamp = getMomentStamp();
             isOk = isOk && currentStamp === EXPECT_MOMENT_STAMP;
             iter++;
@@ -44,6 +42,14 @@ describe('Check getMomentStamp London dimension', () => {
         }
         console.log(`Total: ${iter} iters`);
         expect(isOk).toBe(true);
+    });
+
+    test("Stamp must increment exactly at the next UTC midnight", () => {
+        const lastSecond = new Date(END_OF_DAY_UTC + STEP - 1); // 23:59:59.999
+        const nextDayStart = new Date(START_OF_DAY_UTC + DAY_MS); // next 00:00:00.000
+
+        expect(getMomentStamp(lastSecond)).toBe(EXPECT_MOMENT_STAMP);
+        expect(getMomentStamp(nextDayStart)).toBe(EXPECT_MOMENT_STAMP + 1);
     });
 
 });
