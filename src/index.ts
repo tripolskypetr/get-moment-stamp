@@ -1,7 +1,17 @@
-const DIMENSION_DELTA: number = 1000 * 60 * 60 * 24;
+export type Dimension = "minute" | "hour" | "day";
 
-export const getMomentStamp = (date: Date = new Date()): number => {
-    return Math.floor(date.getTime() / DIMENSION_DELTA);
+const DIMENSION_DELTA: Record<Dimension, number> = {
+    minute: 1000 * 60,
+    hour: 1000 * 60 * 60,
+    day: 1000 * 60 * 60 * 24,
+};
+
+export const getMomentStamp = (date: Date = new Date(), dimension: Dimension = "day"): number => {
+    const delta = DIMENSION_DELTA[dimension];
+    if (delta === undefined) {
+        throw new Error(`Invalid dimension: ${dimension}. Valid dimensions are "minute", "hour", or "day".`);
+    }
+    return Math.floor(date.getTime() / delta);
 };
 
 export const getTimeStamp = (date: Date = new Date()): number => {
@@ -21,8 +31,12 @@ export const isCurrentDate = (date: Date, stamp: number = getMomentStamp()): boo
     return getMomentStamp(date) === stamp;
 };
 
-export const fromMomentStamp = (momentStamp: number): Date => {
-    return new Date(momentStamp * DIMENSION_DELTA);
+export const fromMomentStamp = (momentStamp: number, dimension: Dimension = "day"): Date => {
+    const delta = DIMENSION_DELTA[dimension];
+    if (delta === undefined) {
+        throw new Error(`Invalid dimension: ${dimension}. Valid dimensions are "minute", "hour", or "day".`);
+    }
+    return new Date(momentStamp * delta);
 };
 
 export const fromTimeStamp = (timeStamp: number, baseDate: Date = new Date()): Date => {
